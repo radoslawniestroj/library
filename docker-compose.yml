@@ -27,7 +27,8 @@ services:
         container_name: library_db
         restart: always
         environment:
-            MYSQL_ROOT_PASSWORD: library
+            MYSQL_ROOT_USER: root
+            MYSQL_ROOT_PASSWORD: root
             MYSQL_DATABASE: library
             MYSQL_USER: library
             MYSQL_PASSWORD: library
