@@ -39,6 +39,13 @@
         </deprecationTrigger>
     </source>
 
+    <coverage>
+        <report>
+            <text outputFile="coverage.txt" />
+            <html outputDirectory="coverage-html" />
+        </report>
+    </coverage>
+
     <extensions>
     </extensions>
 </phpunit>

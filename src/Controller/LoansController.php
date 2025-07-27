@@ -15,7 +15,7 @@ use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 #[Route('/api', name: 'api_')]
-final class LoansController extends AbstractController
+class LoansController extends AbstractController
 {
     public function __construct(
         private readonly LoanRepository $loanRepository,

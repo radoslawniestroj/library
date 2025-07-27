@@ -27,7 +27,8 @@ services:
         container_name: library_db
         restart: always
         environment:
-            MYSQL_ROOT_PASSWORD: library
+            MYSQL_ROOT_USER: root
+            MYSQL_ROOT_PASSWORD: root
             MYSQL_DATABASE: library
             MYSQL_USER: library
             MYSQL_PASSWORD: library
@@ -35,6 +36,7 @@ services:
             - "3306:3306"
         volumes:
             - db_data:/var/lib/mysql
+            - ./.docker/db/sql/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
 
 ###> doctrine/doctrine-bundle ###
 #  database:
