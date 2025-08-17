@@ -8,6 +8,7 @@ services:
             - .:/var/www/html
         environment:
             - APP_ENV=dev
+            - XDEBUG_MODE=coverage
         depends_on:
             - db
 
@@ -36,6 +37,7 @@ services:
             - "3306:3306"
         volumes:
             - db_data:/var/lib/mysql
+            - ./.docker/db/sql/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
 
 ###> doctrine/doctrine-bundle ###
 #  database:
