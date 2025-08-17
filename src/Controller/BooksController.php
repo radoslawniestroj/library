@@ -16,7 +16,7 @@ use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 #[Route('/api', name: 'api_')]
-final class BooksController extends AbstractController
+class BooksController extends AbstractController
 {
     public function __construct(
         private readonly BookRepository $bookRepository,

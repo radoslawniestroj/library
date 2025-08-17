@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/api', name: 'api_')]
-final class UsersController extends AbstractController
+class UsersController extends AbstractController
 {
     public function __construct(
         private readonly LoanRepository $loanRepository

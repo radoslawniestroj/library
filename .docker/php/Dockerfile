@@ -8,6 +8,10 @@ RUN apt-get update && apt-get install -y \
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
+# Install xdebug
+RUN pecl install xdebug \
+    && docker-php-ext-enable xdebug
+
 # Symfony CLI (opcjonalnie)
 RUN curl -sS https://get.symfony.com/cli/installer | bash && \
     mv /root/.symfony*/bin/symfony /usr/local/bin/symfony

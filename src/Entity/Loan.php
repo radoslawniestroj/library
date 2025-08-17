@@ -37,6 +37,17 @@ class Loan
     #[ORM\Column(length: 255)]
     private ?string $status = null;
 
+    public function __construct(array $data = [])
+    {
+        if (!empty($data)) {
+            $this->book = $data['book'];
+            $this->user = $data['user'];
+            $this->borrowDate = $data['borrow_date'];
+            $this->returnDate = $data['return_date'];
+            $this->status = $data['status'];
+        }
+    }
+
     public function getId(): ?int
     {
         return $this->id;

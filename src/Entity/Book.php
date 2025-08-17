@@ -42,9 +42,17 @@ class Book
     #[ORM\OneToMany(targetEntity: Loan::class, mappedBy: 'book', orphanRemoval: true)]
     private Collection $loans;
 
-    public function __construct()
+    public function __construct(array $data = [])
     {
         $this->loans = new ArrayCollection();
+
+        if (!empty($data)) {
+            $this->title = $data['title'];
+            $this->author = $data['author'];
+            $this->isbn = $data['isbn'];
+            $this->publicationYear = $data['publication_year'];
+            $this->copiesNumber = $data['copies_number'];
+        }
     }
 
     public function getId(): ?int

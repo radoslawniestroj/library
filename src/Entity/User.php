@@ -45,9 +45,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Loan::class, mappedBy: 'user', orphanRemoval: true)]
     private Collection $loans;
 
-    public function __construct()
+    public function __construct(array $data = [])
     {
         $this->loans = new ArrayCollection();
+
+        if (!empty($data)) {
+            $this->name = $data['name'];
+            $this->surname = $data['surname'];
+            $this->email = $data['email'];
+            $this->password = $data['password'];
+            $this->type = $data['type'];
+        }
     }
 
     public function getId(): ?int
