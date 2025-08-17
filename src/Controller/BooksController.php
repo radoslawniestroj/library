@@ -36,11 +36,7 @@ class BooksController extends AbstractController
 
         $books = $this->bookRepository->findByFilters($query, $title, $author);
 
-        $json = $this->serializer->serialize($books, 'json', [
-            'groups' => ['book:read']
-        ]);
-
-        return new JsonResponse($json, Response::HTTP_OK, [], true);
+        return $this->json($books, Response::HTTP_OK, [], ['groups' => $this->getGroups()]);
     }
 
     #[Route('/books/{id}', name: 'book_detail', methods: ['GET'])]
@@ -52,7 +48,7 @@ class BooksController extends AbstractController
             return $this->json(['error' => 'Book not found'], Response::HTTP_NOT_FOUND);
         }
 
-        return $this->json($book, Response::HTTP_OK, [], ['groups' => ['book:read']]);
+        return $this->json($book, Response::HTTP_OK, [], ['groups' => $this->getGroups()]);
     }
 
     #[Route('/books', name: 'book_create', methods: ['POST'])]
@@ -71,6 +67,29 @@ class BooksController extends AbstractController
         $this->entityManager->persist($book);
         $this->entityManager->flush();
 
-        return $this->json($book, Response::HTTP_CREATED, [], ['groups' => ['book:read']]);
+        return $this->json($book, Response::HTTP_CREATED, [], ['groups' => ['book:admin:read']]);
+    }
+
+    #[Route('/books/{id}', name: 'book_remove', methods: ['DELETE'])]
+    #[IsGranted('ROLE_LIBRARIAN')]
+    public function removeBook(int $id): JsonResponse
+    {
+        $book = $this->bookRepository->find($id);
+
+        $this->entityManager->remove($book);
+        $this->entityManager->flush();
+
+        return $this->json('Book removed', Response::HTTP_OK);
+    }
+
+    private function getGroups(): array
+    {
+        $groups = ['book:read'];
+
+        if ($this->isGranted('ROLE_LIBRARIAN')) {
+            $groups[] = 'book:admin:read';
+        }
+
+        return $groups;
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Dto\LoanRequestDto;
+use App\Entity\User;
 use App\Repository\BookRepository;
 use App\Repository\LoanRepository;
 use App\Service\LoanService;
@@ -37,8 +38,11 @@ class LoansController extends AbstractController
         }
 
         $user = $this->getUser();
-        $book = $this->bookRepository->find($dto->bookId);
+        if (!($user instanceof User)) {
+            return $this->json(['error' => 'User is not logged in'], Response::HTTP_NOT_FOUND);
+        }
 
+        $book = $this->bookRepository->find($dto->bookId);
         if (!$book) {
             return $this->json(['error' => 'Book not found'], Response::HTTP_NOT_FOUND);
         }

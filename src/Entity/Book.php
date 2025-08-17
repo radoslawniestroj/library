@@ -14,9 +14,10 @@ class Book
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['book:admin:read'])]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, unique: true)]
     #[Groups(['book:read', 'book:write', 'loan:read'])]
     private ?string $title = null;
 
@@ -24,7 +25,7 @@ class Book
     #[Groups(['book:read', 'book:write', 'loan:read'])]
     private ?string $author = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, unique: true)]
     #[Groups(['book:read', 'book:write'])]
     private ?string $isbn = null;
 
@@ -33,7 +34,7 @@ class Book
     private ?int $publicationYear = null;
 
     #[ORM\Column]
-    #[Groups(['book:read', 'book:write'])]
+    #[Groups(['book:admin:read', 'book:write'])]
     private ?int $copiesNumber = null;
 
     /**
